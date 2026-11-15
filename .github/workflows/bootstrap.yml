@@ -1,0 +1,40 @@
+name: Bootstrap project
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Write project files
+        run: node bootstrap.mjs
+
+      - name: Commit project files
+        run: |
+          rm bootstrap.mjs
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git reset -q .github/workflows/bootstrap.yml || true
+          git commit -m "Phase 1-2: project scaffold and Supabase SQL" || echo "Nothing to commit"
+          git push
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build (runs without Supabase keys on purpose)
+        run: npm run build
+        
