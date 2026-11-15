@@ -84,3 +84,119 @@ body {
     transform: none !important;
   }
 }
+
+/* Welcome screen, mascot and floating decorations */
+html[data-welcome='seen'] .welcome-layer {
+  display: none;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.welcome-rise {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 30px -6px rgba(255, 61, 154, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 54px 2px rgba(255, 61, 154, 0.9);
+  }
+}
+.welcome-pulse {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both, glow-pulse 2.4s ease-in-out 1.2s infinite;
+  animation-delay: var(--d, 0s), 1.2s;
+}
+
+@keyframes scene-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.scene-fade-in {
+  animation: scene-fade 1s ease-out both;
+}
+
+@keyframes mascot-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+.mascot-bob {
+  animation: mascot-bob 2.6s ease-in-out infinite;
+}
+
+@keyframes mascot-wave {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(16deg);
+  }
+}
+.mascot-wave {
+  transform-origin: 136px 178px;
+  animation: mascot-wave 0.9s ease-in-out infinite;
+}
+
+@keyframes mascot-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.08);
+  }
+}
+.mascot-blink {
+  animation: mascot-blink 4.2s infinite;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translateY(-16px) rotate(calc(var(--r, 0deg) + 6deg));
+  }
+}
+.float-y {
+  animation: float-y 6s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+.twinkle {
+  animation: twinkle 2.2s ease-in-out infinite;
+}
