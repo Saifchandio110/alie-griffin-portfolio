@@ -1,20 +1,22 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { getPublishedArtworks } from '@/lib/artworks';
+import GalleryClient from '@/components/gallery/GalleryClient';
+import GalleryEmpty from '@/components/gallery/GalleryEmpty';
 
 export const metadata: Metadata = { title: 'Gallery' };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const result = await getPublishedArtworks();
   return (
-    <section className="mx-auto max-w-6xl px-5 py-16">
-      <h1 className="font-display text-5xl font-semibold text-blush">Gallery</h1>
-      <div className="glass mt-10 rounded-3xl p-10 text-center shadow-soft">
-        <p className="font-display text-3xl text-moon">No artwork has been published yet.</p>
-        <p className="mx-auto mt-3 max-w-md text-lavender">
-          New pieces will show up here as soon as they are uploaded and published.
-        </p>
-        <Link href="/about" className="btn-ghost mt-8">
-          Meet the artist
-        </Link>
+    <section className="mx-auto max-w-6xl px-5 py-12 sm:py-16">
+      <h1 className="font-display text-5xl font-semibold text-blush sm:text-6xl">Gallery</h1>
+      <p className="mt-3 max-w-xl text-lavender">Tap any piece to see it full screen.</p>
+      <div className="mt-10">
+        {result.status === 'ok' && result.artworks.length > 0 ? (
+          <GalleryClient artworks={result.artworks} />
+        ) : (
+          <GalleryEmpty status={result.status} />
+        )}
       </div>
     </section>
   );

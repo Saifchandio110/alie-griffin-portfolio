@@ -60,3 +60,27 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Gallery card tilt (set by ArtworkCard on fine pointers only) */
+.tilt-card {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 180ms ease-out, box-shadow 300ms ease, border-color 300ms ease;
+  will-change: transform;
+}
+.tilt-card:hover {
+  border-color: rgba(255, 214, 232, 0.4);
+  box-shadow: 0 24px 50px -20px rgba(255, 61, 154, 0.55), 0 0 40px -10px rgba(139, 92, 246, 0.5);
+}
+.tilt-glare {
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 214, 232, 0.22), transparent 55%);
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+.tilt-card:hover .tilt-glare {
+  opacity: 1;
+}
+@media (hover: none) {
+  .tilt-card {
+    transform: none !important;
+  }
+}

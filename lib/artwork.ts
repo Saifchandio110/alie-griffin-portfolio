@@ -26,6 +26,11 @@ export type Artwork = {
   updated_at: string;
 };
 
+export type PublicArtwork = Pick<
+  Artwork,
+  'id' | 'title' | 'description' | 'category' | 'image_url' | 'created_at'
+>;
+
 export type ActionResult = { ok: true; warning?: string } | { ok: false; error: string };
 
 export const TITLE_MAX = 120;
