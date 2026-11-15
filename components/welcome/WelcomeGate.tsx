@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import MascotMira from '@/components/mascots/MascotMira';
+import CharacterArt from '@/components/mascots/CharacterArt';
 import { WELCOME_KEY, setWelcomeStatus, useWelcomeStatus } from '@/lib/welcome';
 
 // Runs before first paint so visitors who already entered never see the welcome flash again.
@@ -83,7 +84,12 @@ export default function WelcomeGate({ name }: { name: string }) {
             className="fixed inset-0 z-[90] flex flex-col items-center justify-center overflow-y-auto px-6 py-8 text-center"
           >
             <div className="welcome-rise relative" style={{ ['--d' as string]: '0s' }}>
-              <MascotMira className="block h-[30dvh] max-h-[21rem] min-h-[11rem] w-auto" />
+              <CharacterArt
+                srcs={['/mascots/welcome-girl.webp', '/mascots/welcome-girl.png']}
+                alt="A friendly anime girl waving hello"
+                className="mascot-bob block h-[34dvh] max-h-[24rem] min-h-[12rem] w-auto object-contain drop-shadow-[0_10px_30px_rgba(255,61,154,0.45)]"
+                fallback={<MascotMira className="block h-[30dvh] max-h-[21rem] min-h-[11rem] w-auto" />}
+              />
               <svg viewBox="0 0 24 24" className="twinkle absolute -left-3 top-8 h-6 w-6 text-moon" fill="currentColor" aria-hidden="true">
                 <path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" />
               </svg>

@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import MascotMimi from '@/components/mascots/MascotMimi';
 import MascotBun from '@/components/mascots/MascotBun';
 import MascotPuff from '@/components/mascots/MascotPuff';
+import CharacterArt from '@/components/mascots/CharacterArt';
 import { useWelcomeStatus } from '@/lib/welcome';
 
 type State = 'walk' | 'idle' | 'wave' | 'react';
@@ -159,7 +160,12 @@ export default function EdgeMascots() {
         <span className="actor-bubble">♡</span>
         <div className="actor-inner">
           <div className="actor-flip">
-            <MascotMimi className="block w-full" />
+            <CharacterArt
+              srcs={['/mascots/edge-girl-1.webp', '/mascots/edge-girl-1.png']}
+              alt=""
+              className="block h-auto max-h-[140px] w-full object-contain object-bottom"
+              fallback={<MascotMimi className="block w-full" />}
+            />
           </div>
         </div>
       </div>
@@ -168,7 +174,12 @@ export default function EdgeMascots() {
         <span className="actor-bubble">♪</span>
         <div className="actor-inner">
           <div className="actor-flip">
-            <MascotBun className="block w-full" />
+            <CharacterArt
+              srcs={['/mascots/edge-girl-2.webp', '/mascots/edge-girl-2.png']}
+              alt=""
+              className="block h-auto max-h-[140px] w-full object-contain object-bottom"
+              fallback={<MascotBun className="block w-full" />}
+            />
           </div>
         </div>
       </div>
@@ -177,7 +188,12 @@ export default function EdgeMascots() {
         <span className="actor-bubble">✦</span>
         <div className="actor-inner">
           <div className="actor-flip">
-            <MascotPuff className="block w-full" />
+            <CharacterArt
+              srcs={['/mascots/edge-girl-3.webp', '/mascots/edge-girl-3.png']}
+              alt=""
+              className="block h-auto max-h-[140px] w-full object-contain object-bottom"
+              fallback={<MascotPuff className="block w-full" />}
+            />
           </div>
         </div>
       </div>

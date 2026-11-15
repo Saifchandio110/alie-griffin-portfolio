@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
+import { cssVars } from '@/lib/cssVars';
 
 const heart = 'M12 21s-7-4.6-9.5-9C.8 9 2.4 5.5 5.8 5.5c2 0 3.5 1.1 4.2 2.4.7-1.3 2.2-2.4 4.2-2.4 3.4 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z';
 const star = 'M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z';
@@ -46,17 +47,16 @@ export default function AboutSection({ name }: { name: string }) {
               viewBox="0 0 24 24"
               aria-hidden="true"
               className="float-y absolute"
-              style={
+              style={cssVars(
                 {
                   ...d.style,
                   width: d.s,
                   height: d.s,
                   color: d.c,
-                  '--d': d.d,
-                  '--r': d.r,
                   filter: 'drop-shadow(0 0 8px rgba(255,61,154,0.5))',
-                } as React.CSSProperties
-              }
+                },
+                { '--d': d.d, '--r': d.r },
+              )}
               fill="currentColor"
             >
               <path d={d.p} />
