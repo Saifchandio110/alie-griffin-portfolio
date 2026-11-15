@@ -200,3 +200,136 @@ html[data-welcome='seen'] .welcome-layer {
 .twinkle {
   animation: twinkle 2.2s ease-in-out infinite;
 }
+
+/* Mira (welcome) */
+.mira-bob {
+  animation: mascot-bob 3s ease-in-out infinite;
+}
+.mira-wave {
+  transform-origin: 214px 270px;
+  animation: mira-wave 1.1s ease-in-out infinite;
+}
+@keyframes mira-wave {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(11deg);
+  }
+}
+.mira-blink {
+  animation: mascot-blink 4.6s infinite;
+}
+
+/* Edge mascots */
+.bun-wave {
+  transform-origin: 118px 146px;
+}
+.bun-ear {
+  animation: ear-twitch 5s ease-in-out infinite;
+}
+.bun-ear2 {
+  animation-delay: 0.6s;
+}
+@keyframes ear-twitch {
+  0%,
+  86%,
+  100% {
+    transform: rotate(0deg);
+  }
+  90% {
+    transform: rotate(-9deg);
+  }
+  95% {
+    transform: rotate(5deg);
+  }
+}
+.puff-star {
+  animation: twinkle 2.2s ease-in-out infinite;
+}
+
+.edge-actor {
+  will-change: transform;
+}
+.edge-actor .mascot-bob {
+  animation: none;
+}
+.edge-actor .mascot-wave {
+  animation-play-state: paused;
+}
+.edge-actor[data-state='wave'] .mascot-wave {
+  animation-play-state: running;
+  animation-duration: 0.7s;
+}
+.edge-actor[data-state='walk'] .actor-inner {
+  animation: walk-hop 0.5s ease-in-out infinite;
+}
+.edge-actor[data-state='idle'] .actor-inner,
+.edge-actor[data-state='wave'] .actor-inner {
+  animation: mascot-bob 2.8s ease-in-out infinite;
+}
+.edge-actor[data-state='react'] .actor-inner {
+  animation: react-jump 0.55s ease-out 2;
+}
+.edge-actor[data-state='react'] .actor-bubble {
+  animation: bubble-pop 1.3s ease-out both;
+}
+.actor-bubble {
+  position: absolute;
+  left: 50%;
+  top: -1.1rem;
+  opacity: 0;
+  font-weight: 800;
+  color: #ff3d9a;
+  text-shadow: 0 0 8px rgba(255, 214, 232, 0.9);
+}
+@keyframes walk-hop {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+}
+@keyframes react-jump {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-14px) scale(1.06);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes bubble-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 6px) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -2px) scale(1.15);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -6px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -12px) scale(1);
+  }
+}
+
+/* About page portrait ring */
+.spin-ring {
+  background: conic-gradient(from 0deg, #ff3d9a, #cdb4ff, #8b5cf6, #ffd6e8, #ff3d9a);
+  animation: spin-slow 14s linear infinite;
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import MascotMimi from '@/components/mascots/MascotMimi';
+import MascotMira from '@/components/mascots/MascotMira';
 import { WELCOME_KEY, setWelcomeStatus, useWelcomeStatus } from '@/lib/welcome';
 
 // Runs before first paint so visitors who already entered never see the welcome flash again.
@@ -83,11 +83,11 @@ export default function WelcomeGate({ name }: { name: string }) {
             className="fixed inset-0 z-[90] flex flex-col items-center justify-center overflow-y-auto px-6 py-8 text-center"
           >
             <div className="welcome-rise relative" style={{ ['--d' as string]: '0s' }}>
-              <MascotMimi className="w-36 sm:w-48" />
-              <svg viewBox="0 0 24 24" className="twinkle absolute -left-4 top-4 h-6 w-6 text-moon" fill="currentColor" aria-hidden="true">
+              <MascotMira className="block h-[30dvh] max-h-[21rem] min-h-[11rem] w-auto" />
+              <svg viewBox="0 0 24 24" className="twinkle absolute -left-3 top-8 h-6 w-6 text-moon" fill="currentColor" aria-hidden="true">
                 <path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" />
               </svg>
-              <svg viewBox="0 0 24 24" className="twinkle absolute -right-5 top-16 h-5 w-5 text-blush" style={{ animationDelay: '0.7s' }} fill="currentColor" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="twinkle absolute -right-4 top-24 h-5 w-5 text-blush" style={{ animationDelay: '0.7s' }} fill="currentColor" aria-hidden="true">
                 <path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" />
               </svg>
             </div>

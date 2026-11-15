@@ -2,6 +2,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import SiteFooter from '@/components/layout/SiteFooter';
 import SiteBackdrop from '@/components/3d/SiteBackdrop';
 import WelcomeGate from '@/components/welcome/WelcomeGate';
+import EdgeMascots from '@/components/mascots/EdgeMascots';
 import { getPortfolioName } from '@/lib/settings';
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -20,6 +21,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         <SiteFooter name={name} />
       </div>
       <SiteBackdrop />
+      <EdgeMascots />
       <WelcomeGate name={name} />
     </>
   );
