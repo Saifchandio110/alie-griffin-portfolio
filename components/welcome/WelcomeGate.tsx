@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import MascotMira from '@/components/mascots/MascotMira';
+import ChibiRig from '@/components/mascots/ChibiRig';
 import CharacterArt from '@/components/mascots/CharacterArt';
 import { WELCOME_KEY, setWelcomeStatus, useWelcomeStatus } from '@/lib/welcome';
 
@@ -88,7 +88,11 @@ export default function WelcomeGate({ name }: { name: string }) {
                 srcs={['/mascots/welcome-girl.webp', '/mascots/welcome-girl.png']}
                 alt="A friendly anime girl waving hello"
                 className="mascot-bob block h-[34dvh] max-h-[24rem] min-h-[12rem] w-auto object-contain drop-shadow-[0_10px_30px_rgba(255,61,154,0.45)]"
-                fallback={<MascotMira className="block h-[30dvh] max-h-[21rem] min-h-[11rem] w-auto" />}
+                fallback={
+                  <div data-pose="wave" className="aspect-[5/7] h-[36dvh] max-h-[26rem] min-h-[13rem]">
+                    <ChibiRig variant="hana" className="drop-shadow-[0_10px_30px_rgba(255,61,154,0.45)]" />
+                  </div>
+                }
               />
               <svg viewBox="0 0 24 24" className="twinkle absolute -left-3 top-8 h-6 w-6 text-moon" fill="currentColor" aria-hidden="true">
                 <path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" />
