@@ -31,5 +31,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm -q -f --ignore-unmatch apply-update.mjs
           git add public components app lib
-          git commit -m "New characters: welcome girl and 4 roaming shimejis" || echo "Nothing to commit"
+          git commit -m || echo "Nothing to commit"
           git push
