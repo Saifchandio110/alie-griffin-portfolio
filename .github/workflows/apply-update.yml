@@ -1,0 +1,38 @@
+name: Apply mascot update
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Write the new character files
+        run: node apply-update.mjs
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build (the site is only updated if this passes)
+        run: npm run build
+
+      - name: Save to GitHub
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -q -f --ignore-unmatch apply-update.mjs
+          git add public components app lib
+          git commit -m "New characters: welcome girl and 4 roaming shimejis" || echo "Nothing to commit"
+          git push
