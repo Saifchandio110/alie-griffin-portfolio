@@ -242,16 +242,6 @@ html[data-welcome='seen'] .welcome-layer {
 [data-pose='hang'] .rig .leg-r,[data-pose='drag'] .rig .leg-r{animation:rig-kick 1.1s ease-in-out infinite alternate-reverse}
 [data-pose='climb'] .rig .shadow,[data-pose='cling'] .rig .shadow,[data-pose='hang'] .rig .shadow,[data-pose='fall'] .rig .shadow,[data-pose='drag'] .rig .shadow{display:none}
 
-/* Roaming characters */
-.edge-actor{pointer-events:auto;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;will-change:transform}
-.edge-actor[data-surface='held']{cursor:grabbing}
-.actor-inner,.actor-flip{transform-origin:50% 100%}
-.edge-actor[data-pose='react'] .actor-inner{animation:react-jump .55s ease-out 2}
-.edge-actor[data-pose='react'] .actor-bubble{animation:bubble-pop 1.3s ease-out both}
-.actor-bubble{position:absolute;left:50%;top:-1.1rem;opacity:0;font-weight:800;color:#ff3d9a;text-shadow:0 0 8px rgba(255,214,232,.9);pointer-events:none}
-@keyframes react-jump{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-14px) scale(1.06)}100%{transform:translateY(0) scale(1)}}
-@keyframes bubble-pop{0%{opacity:0;transform:translate(-50%,6px) scale(.5)}20%{opacity:1;transform:translate(-50%,-2px) scale(1.15)}80%{opacity:1;transform:translate(-50%,-6px) scale(1)}100%{opacity:0;transform:translate(-50%,-12px) scale(1)}}
-
 /* About page portrait ring */
 .spin-ring {
   background: conic-gradient(from 0deg, #ff3d9a, #cdb4ff, #8b5cf6, #ffd6e8, #ff3d9a);
@@ -261,54 +251,4 @@ html[data-welcome='seen'] .welcome-layer {
   to {
     transform: rotate(360deg);
   }
-}
-
-/* ===== Roaming picture characters (sprites) ===== */
-.edge-actors{--shim-u:84px}
-@media (min-width:640px){.edge-actors{--shim-u:104px}}
-@media (min-width:1024px){.edge-actors{--shim-u:122px}}
-
-.actor-body{width:100%;height:100%;transform-origin:50% 100%;will-change:transform}
-.actor-sprite{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none;
-  filter:drop-shadow(0 0 6px rgba(255,140,198,.55)) drop-shadow(0 3px 5px rgba(0,0,0,.35))}
-.actor-shadow{position:absolute;left:14%;right:14%;bottom:1px;height:9px;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(0,0,0,.4),transparent);display:none;pointer-events:none}
-.edge-actor[data-surface='floor'] .actor-shadow{display:block}
-.actor-pin{position:absolute;left:50%;top:-5px;width:20px;height:10px;margin-left:-10px;border-radius:6px;
-  background:#ff3d9a;box-shadow:0 0 8px rgba(255,61,154,.8),inset 0 -2px 0 rgba(0,0,0,.15);display:none;z-index:2;pointer-events:none}
-.edge-actor[data-pose='hang'] .actor-pin,.edge-actor[data-pose='drag'] .actor-pin{display:block}
-
-/* poses (chosen by the data-pose attribute that lib/edgeActors.ts keeps up to date) */
-.edge-actor[data-pose='idle'] .actor-body{animation:sp-breathe 3.2s ease-in-out infinite}
-.edge-actor[data-pose='walk'] .actor-body{animation:sp-walk .66s ease-in-out infinite}
-.edge-actor[data-pose='sit'] .actor-body{animation:sp-sit 3.6s ease-in-out infinite}
-.edge-actor[data-pose='wave'] .actor-body{animation:sp-wave .55s ease-in-out infinite alternate}
-.edge-actor[data-pose='react'] .actor-body{animation:sp-react .22s ease-in-out infinite alternate}
-.edge-actor[data-pose='climb'] .actor-body{animation:sp-climb .7s ease-in-out infinite}
-.edge-actor[data-pose='cling'] .actor-body{animation:sp-cling .9s ease-in-out infinite alternate}
-.edge-actor[data-pose='hang'] .actor-body{transform-origin:50% 0;animation:sp-hang 2s ease-in-out infinite alternate}
-.edge-actor[data-pose='fall'] .actor-body{transform-origin:50% 50%;animation:sp-fall .38s ease-in-out infinite alternate}
-.edge-actor[data-pose='drag'] .actor-body{transform-origin:50% 0;animation:sp-drag .9s ease-in-out infinite alternate}
-/* on the side walls the character leans into the wall */
-.edge-actor[data-surface='wallL'] .actor-sprite{transform:rotate(-8deg);transform-origin:50% 100%}
-.edge-actor[data-surface='wallR'] .actor-sprite{transform:rotate(8deg);transform-origin:50% 100%}
-
-@keyframes sp-breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.025,.972)}}
-@keyframes sp-walk{
-  0%{transform:translateY(0) rotate(-3.5deg) scale(1.04,.95)}
-  25%{transform:translateY(-7%) rotate(0deg) scale(.98,1.04)}
-  50%{transform:translateY(0) rotate(3.5deg) scale(1.04,.95)}
-  75%{transform:translateY(-7%) rotate(0deg) scale(.98,1.04)}
-  100%{transform:translateY(0) rotate(-3.5deg) scale(1.04,.95)}}
-@keyframes sp-sit{0%,100%{transform:translateY(5%) scale(1.06,.86) rotate(0deg)}50%{transform:translateY(5%) scale(1.04,.89) rotate(-2deg)}}
-@keyframes sp-wave{0%{transform:translateY(0) rotate(-7deg)}100%{transform:translateY(-4%) rotate(7deg)}}
-@keyframes sp-react{0%{transform:rotate(-5deg) scale(1.05)}100%{transform:rotate(5deg) scale(1.05)}}
-@keyframes sp-climb{0%{transform:translate(0,0) rotate(-4deg)}25%{transform:translate(1px,-5%) rotate(0deg)}50%{transform:translate(0,0) rotate(4deg)}75%{transform:translate(-1px,-5%) rotate(0deg)}100%{transform:translate(0,0) rotate(-4deg)}}
-@keyframes sp-cling{0%{transform:translateX(-1.5px) rotate(-1.5deg)}100%{transform:translateX(1.5px) rotate(1.5deg)}}
-@keyframes sp-hang{0%{transform:rotate(-7deg)}100%{transform:rotate(7deg)}}
-@keyframes sp-fall{0%{transform:rotate(-11deg) scale(.95,1.09)}100%{transform:rotate(11deg) scale(1,1.05)}}
-@keyframes sp-drag{0%{transform:rotate(-10deg) scale(1.05)}100%{transform:rotate(10deg) scale(1.05)}}
-
-@media (prefers-reduced-motion: reduce){
-  .actor-body{animation:none!important}
 }

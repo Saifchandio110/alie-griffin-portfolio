@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Nunito } from 'next/font/google';
+import { Cormorant_Garamond, Nunito, Pacifico } from 'next/font/google';
 import './globals.css';
 import { getPortfolioName } from '@/lib/settings';
 
@@ -8,6 +8,13 @@ const display = Cormorant_Garamond({
   weight: ['500', '600', '700'],
   style: ['normal', 'italic'],
   variable: '--font-display',
+  display: 'swap',
+});
+
+const script = Pacifico({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-script',
   display: 'swap',
 });
 
@@ -36,7 +43,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${display.variable} ${body.variable} ${script.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased">{children}</body>
     </html>
   );

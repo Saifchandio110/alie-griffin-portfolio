@@ -7,7 +7,6 @@ import { motion, useReducedMotion } from 'framer-motion';
 export default function Hero({ name }: { name: string }) {
   const reduce = useReducedMotion();
   const words = name.trim().split(/\s+/);
-  let letterIndex = 0;
 
   return (
     <section className="relative isolate flex min-h-[calc(100dvh-4rem)] flex-col items-center justify-center px-5 py-16 text-center">
@@ -20,28 +19,20 @@ export default function Hero({ name }: { name: string }) {
 
       <h1
         aria-label={name}
-        className="font-display text-[clamp(3.25rem,15vw,9.5rem)] font-bold leading-[0.95] text-blush"
-        style={{ textShadow: '0 0 34px rgba(255,61,154,0.55), 0 5px 0 rgba(139,92,246,0.65)' }}
+        className="font-script text-[clamp(3rem,13vw,8rem)] leading-[1.15] text-blush"
       >
         {words.map((word, wi) => (
           <Fragment key={wi}>
             {wi > 0 && ' '}
-            <span className="inline-block whitespace-nowrap" aria-hidden="true">
-              {Array.from(word).map((ch, ci) => {
-                const idx = letterIndex++;
-                return (
-                  <motion.span
-                    key={ci}
-                    className="inline-block"
-                    initial={reduce ? false : { opacity: 0, y: 44, rotate: -5 }}
-                    animate={{ opacity: 1, y: 0, rotate: 0 }}
-                    transition={{ delay: 0.1 + idx * 0.05, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    {ch}
-                  </motion.span>
-                );
-              })}
-            </span>
+            <motion.span
+              className="inline-block whitespace-nowrap px-[0.04em]"
+              aria-hidden="true"
+              initial={reduce ? false : { opacity: 0, y: 36, rotate: -3 }}
+              animate={{ opacity: 1, y: 0, rotate: 0 }}
+              transition={{ delay: 0.1 + wi * 0.18, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {word}
+            </motion.span>
           </Fragment>
         ))}
       </h1>
