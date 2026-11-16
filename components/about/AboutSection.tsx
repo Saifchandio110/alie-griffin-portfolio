@@ -1,6 +1,8 @@
 'use client';
 
+import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
+import type { AboutContent } from '@/lib/about';
 import { cssVars } from '@/lib/cssVars';
 
 const heart = 'M12 21s-7-4.6-9.5-9C.8 9 2.4 5.5 5.8 5.5c2 0 3.5 1.1 4.2 2.4.7-1.3 2.2-2.4 4.2-2.4 3.4 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z';
@@ -15,7 +17,7 @@ const decor = [
 
 const socialPlaceholders = ['Social link placeholder', 'Social link placeholder', 'Social link placeholder'];
 
-export default function AboutSection({ name }: { name: string }) {
+export default function AboutSection({ name, about }: { name: string; about: AboutContent }) {
   const reduce = useReducedMotion();
   const reveal = (delay: number) => ({
     initial: reduce ? false : ({ opacity: 0, y: 20 } as const),
@@ -33,12 +35,24 @@ export default function AboutSection({ name }: { name: string }) {
         <motion.div {...reveal(0)} className="relative mx-auto w-64 sm:w-72">
           <div className="relative overflow-hidden rounded-[2rem] p-[3px] shadow-soft">
             <div className="spin-ring absolute -inset-[60%]" aria-hidden="true" />
-            <div className="relative flex aspect-[4/5] flex-col items-center justify-center gap-3 rounded-[calc(2rem-3px)] bg-midnight px-6 text-center">
-              <svg viewBox="0 0 24 24" className="h-10 w-10 text-bubblegum" fill="currentColor" aria-hidden="true">
-                <path d="M12 2l1.8 5.7L19.5 9l-5.7 1.8L12 16.5l-1.8-5.7L4.5 9l5.7-1.3L12 2zm7 11l.9 2.6 2.6.9-2.6.9L19 20l-.9-2.6-2.6-.9 2.6-.9L19 13z" />
-              </svg>
-              <p className="font-display text-2xl text-moon">Profile picture placeholder</p>
-              <p className="text-sm text-lavender">The artist’s photo will appear here.</p>
+            <div className="relative flex aspect-[4/5] flex-col items-center justify-center gap-3 overflow-hidden rounded-[calc(2rem-3px)] bg-midnight px-6 text-center">
+              {about.photo_url ? (
+                <Image
+                  src={about.photo_url}
+                  alt={`Portrait of ${name}`}
+                  fill
+                  sizes="(min-width: 640px) 288px, 256px"
+                  className="object-cover"
+                />
+              ) : (
+                <>
+                  <svg viewBox="0 0 24 24" className="h-10 w-10 text-bubblegum" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2l1.8 5.7L19.5 9l-5.7 1.8L12 16.5l-1.8-5.7L4.5 9l5.7-1.3L12 2zm7 11l.9 2.6 2.6.9-2.6.9L19 20l-.9-2.6-2.6-.9 2.6-.9L19 13z" />
+                  </svg>
+                  <p className="font-display text-2xl text-moon">Profile picture placeholder</p>
+                  <p className="text-sm text-lavender">The artist’s photo will appear here.</p>
+                </>
+              )}
             </div>
           </div>
           {decor.map((d, i) => (
@@ -69,29 +83,46 @@ export default function AboutSection({ name }: { name: string }) {
           <motion.div {...reveal(0.05)}>
             <h2 className="text-sm font-bold uppercase tracking-widest text-lavender">Artist</h2>
             <p className="mt-1 font-display text-4xl font-semibold text-moon">{name}</p>
-            <p className="mt-1 text-lavender">Digital illustrations and paintings</p>
+            {about.tagline && <p className="mt-1 text-lavender">{about.tagline}</p>}
           </motion.div>
 
           <motion.div {...reveal(0.1)}>
             <h2 className="text-sm font-bold uppercase tracking-widest text-lavender">Introduction</h2>
-            <p className="mt-2 rounded-2xl border border-dashed border-lavender/40 bg-white/[0.03] px-5 py-4 text-lavender">
-              [The artist’s introduction will go here once it has been written.]
-            </p>
+            {about.intro ? (
+              <p className="mt-2 whitespace-pre-line leading-relaxed text-moon">{about.intro}</p>
+            ) : (
+              <p className="mt-2 rounded-2xl border border-dashed border-lavender/40 bg-white/[0.03] px-5 py-4 text-lavender">
+                [The artist’s introduction will go here once it has been written.]
+              </p>
+            )}
           </motion.div>
 
           <motion.div {...reveal(0.15)}>
             <h2 className="text-sm font-bold uppercase tracking-widest text-lavender">Find me online</h2>
             <ul className="mt-3 flex flex-wrap gap-3">
-              {socialPlaceholders.map((label, i) => (
-                <li key={i}>
-                  <span
-                    aria-disabled="true"
-                    className="inline-flex cursor-not-allowed items-center rounded-full border border-dashed border-lavender/40 px-5 py-2 text-sm font-semibold text-lavender/80"
-                  >
-                    {label}
-                  </span>
-                </li>
-              ))}
+              {about.socials.length > 0
+                ? about.socials.map((link) => (
+                    <li key={link.url}>
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center rounded-full border border-lavender/50 px-5 py-2 text-sm font-semibold text-blush transition hover:border-blush hover:bg-white/10"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))
+                : socialPlaceholders.map((label, i) => (
+                    <li key={i}>
+                      <span
+                        aria-disabled="true"
+                        className="inline-flex cursor-not-allowed items-center rounded-full border border-dashed border-lavender/40 px-5 py-2 text-sm font-semibold text-lavender/80"
+                      >
+                        {label}
+                      </span>
+                    </li>
+                  ))}
             </ul>
           </motion.div>
         </div>

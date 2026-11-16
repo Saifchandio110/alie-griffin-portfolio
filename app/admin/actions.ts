@@ -12,6 +12,16 @@ import {
   UUID_RE,
   type ActionResult,
 } from '@/lib/artwork';
+import {
+  ABOUT_PHOTO_PATH_RE,
+  INTRO_MAX,
+  SOCIAL_LABEL_MAX,
+  SOCIAL_MAX,
+  TAGLINE_MAX,
+  hostLabel,
+  normalizeUrl,
+  type SocialLink,
+} from '@/lib/about';
 
 type Fields = { title: string; description: string; category: string };
 
@@ -151,6 +161,71 @@ export async function deleteArtwork(id: string): Promise<ActionResult> {
   if (IMAGE_PATH_RE.test(path)) {
     const { error: removeError } = await supabase.storage.from('artworks').remove([path]);
     if (removeError) warning = 'The artwork was deleted, but its image file could not be removed.';
+  }
+  refreshPublicSite();
+  return { ok: true, warning };
+}
+
+export async function saveAbout(input: {
+  tagline: string;
+  intro: string;
+  socials: SocialLink[];
+  photo_path?: string;
+  remove_photo?: boolean;
+}): Promise<ActionResult> {
+  const tagline = typeof input?.tagline === 'string' ? input.tagline.trim() : '';
+  const intro = typeof input?.intro === 'string' ? input.intro.trim() : '';
+  if (tagline.length > TAGLINE_MAX) return { ok: false, error: `The tagline can be up to ${TAGLINE_MAX} characters.` };
+  if (intro.length > INTRO_MAX) return { ok: false, error: `The introduction can be up to ${INTRO_MAX} characters.` };
+
+  const rows = Array.isArray(input?.socials) ? input.socials : [];
+  if (rows.length > SOCIAL_MAX) return { ok: false, error: `You can add up to ${SOCIAL_MAX} social links.` };
+  const socials: SocialLink[] = [];
+  for (const row of rows) {
+    const url = typeof row?.url === 'string' ? normalizeUrl(row.url) : null;
+    if (!url) return { ok: false, error: 'One of the social links is not a valid web address.' };
+    const label = typeof row.label === 'string' && row.label.trim() ? row.label.trim() : hostLabel(url);
+    socials.push({ label: label.slice(0, SOCIAL_LABEL_MAX), url });
+  }
+
+  const photoPath = input?.photo_path;
+  if (photoPath !== undefined && (typeof photoPath !== 'string' || !ABOUT_PHOTO_PATH_RE.test(photoPath))) {
+    return { ok: false, error: 'The uploaded photo path is not valid.' };
+  }
+
+  const { supabase, error: authError } = await getAdminClient();
+  if (!supabase) return { ok: false, error: authError ?? 'Not allowed.' };
+
+  const { data: current, error: readError } = await supabase
+    .from('about_content')
+    .select('photo_path')
+    .eq('id', 1)
+    .maybeSingle();
+  if (readError || !current) {
+    return { ok: false, error: 'About settings are not set up yet. Run about.sql in Supabase first.' };
+  }
+
+  const update: Record<string, unknown> = { tagline, intro, socials };
+  if (photoPath) {
+    const { data: pub } = supabase.storage.from('artworks').getPublicUrl(photoPath);
+    update.photo_path = photoPath;
+    update.photo_url = pub.publicUrl;
+  } else if (input?.remove_photo === true) {
+    update.photo_path = null;
+    update.photo_url = null;
+  }
+
+  const { data, error } = await supabase.from('about_content').update(update).eq('id', 1).select('id');
+  if (error || !data || data.length === 0) {
+    return { ok: false, error: 'Could not save the About page. Try again.' };
+  }
+
+  // Delete the old photo file once it has been replaced or removed.
+  const oldPath = typeof current.photo_path === 'string' ? current.photo_path : '';
+  let warning: string | undefined;
+  if (oldPath && ABOUT_PHOTO_PATH_RE.test(oldPath) && oldPath !== photoPath && (photoPath || input?.remove_photo === true)) {
+    const { error: removeError } = await supabase.storage.from('artworks').remove([oldPath]);
+    if (removeError) warning = 'Saved, but the old photo file could not be removed.';
   }
   refreshPublicSite();
   return { ok: true, warning };

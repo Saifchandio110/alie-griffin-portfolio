@@ -3,6 +3,7 @@ import { hasSupabaseEnv } from '@/lib/env';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { DEFAULT_PORTFOLIO_NAME } from '@/lib/settings';
 import type { Artwork } from '@/lib/artwork';
+import { parseAbout } from '@/lib/about';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import SetupNotice from '@/components/admin/SetupNotice';
 import { signOutAction } from '@/app/admin/actions';
@@ -37,9 +38,10 @@ export default async function AdminPage() {
     );
   }
 
-  const [settingsResult, artworksResult] = await Promise.all([
+  const [settingsResult, artworksResult, aboutResult] = await Promise.all([
     supabase.from('portfolio_settings').select('portfolio_name').eq('id', 1).maybeSingle(),
     supabase.from('artworks').select('*').order('created_at', { ascending: false }),
+    supabase.from('about_content').select('tagline, intro, photo_url, socials').eq('id', 1).maybeSingle(),
   ]);
 
   const loadError =
@@ -52,6 +54,8 @@ export default async function AdminPage() {
       email={user.email ?? ''}
       portfolioName={settingsResult.data?.portfolio_name ?? DEFAULT_PORTFOLIO_NAME}
       artworks={(artworksResult.data ?? []) as Artwork[]}
+      about={parseAbout(aboutResult.data)}
+      aboutReady={!aboutResult.error && !!aboutResult.data}
       loadError={loadError}
     />
   );

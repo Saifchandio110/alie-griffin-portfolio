@@ -3,7 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { signOutAction } from '@/app/admin/actions';
 import type { Artwork } from '@/lib/artwork';
+import type { AboutContent } from '@/lib/about';
 import NameForm from '@/components/admin/NameForm';
+import AboutForm from '@/components/admin/AboutForm';
 import UploadForm from '@/components/admin/UploadForm';
 import ArtworkList from '@/components/admin/ArtworkList';
 import { smallBtn } from '@/components/admin/styles';
@@ -15,11 +17,15 @@ export default function AdminDashboard({
   email,
   portfolioName,
   artworks,
+  about,
+  aboutReady,
   loadError,
 }: {
   email: string;
   portfolioName: string;
   artworks: Artwork[];
+  about: AboutContent;
+  aboutReady: boolean;
   loadError: string | null;
 }) {
   const [toast, setToast] = useState<Toast | null>(null);
@@ -64,6 +70,7 @@ export default function AdminDashboard({
       )}
 
       <NameForm initialName={portfolioName} notify={notify} />
+      <AboutForm key={JSON.stringify(about)} initial={about} ready={aboutReady} notify={notify} />
       <UploadForm notify={notify} />
       <ArtworkList artworks={artworks} notify={notify} />
 
