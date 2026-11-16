@@ -7,8 +7,8 @@ export type Rand = () => number;
 export const HEADER_HEIGHT = 64; // characters hang from the bottom edge of the site header
 const EDGE = 2;
 const GRAVITY = 1600;
-const WALK_SPEED = 38;
-const CLIMB_SPEED = 34;
+const WALK_SPEED = 54;
+const CLIMB_SPEED = 42;
 
 export type Bounds = { left: number; right: number; floor: number; ceil: number };
 export type Pointer = { x: number; y: number };

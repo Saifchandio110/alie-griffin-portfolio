@@ -1,12 +1,15 @@
-# Welcome character artwork (optional)
+# Character artwork
 
-The welcome screen shows the built-in chibi girl "Hana". To use your own artwork instead,
-add a transparent-background image here and it is used automatically:
+All files here are transparent WebP images (original art, sticker-style outline included).
 
-| File name (WebP preferred, PNG also works) | Where it appears | Suggested size |
-| --- | --- | --- |
-| welcome-girl.webp | Welcome screen (large, waving) | about 800 px tall |
+| File | Where it appears |
+| --- | --- |
+| welcome-girl.webp | Welcome screen (large, bobbing) |
+| shimeji-pink.webp | Roaming character 1 (shown on every screen size) |
+| shimeji-bunny.webp | Roaming character 2 (shown on every screen size) |
+| shimeji-glasses.webp | Roaming character 3 (tablet and desktop) |
+| shimeji-headphones.webp | Roaming character 4 (desktop only) |
 
-Tips:
-- Transparent background, under about 300 KB.
-- Use original art you have the rights to. Do not use existing copyrighted characters.
+To swap a character, replace the file with another transparent WebP of the same name.
+If the proportions change, update the `w` and `h` numbers for it in components/mascots/EdgeMascots.tsx.
+Use original art you have the rights to.

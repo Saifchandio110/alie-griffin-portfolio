@@ -86,7 +86,7 @@ export default function WelcomeGate({ name }: { name: string }) {
             <div className="welcome-rise relative" style={{ ['--d' as string]: '0s' }}>
               <CharacterArt
                 srcs={['/mascots/welcome-girl.webp', '/mascots/welcome-girl.png']}
-                alt="A friendly anime girl waving hello"
+                alt="A cute girl in a black cat hoodie making peace signs"
                 className="mascot-bob block h-[34dvh] max-h-[24rem] min-h-[12rem] w-auto object-contain drop-shadow-[0_10px_30px_rgba(255,61,154,0.45)]"
                 fallback={
                   <div data-pose="wave" className="aspect-[5/7] h-[36dvh] max-h-[26rem] min-h-[13rem]">
